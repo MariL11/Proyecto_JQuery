@@ -1,6 +1,18 @@
-
+        @font-face {
+            font-family: "fuenteTitulo";
+            src: url(../fuentes/Inter-VariableFont_slnt\,wght.ttf);
+        }
+        
         * {box-sizing: border-box;}
+        
 
+        #titulo{
+            font-family: "fuenteTitulo", sans-serif, serif;
+        }
+
+        .imagenSeleccionada{
+            filter: brightness(100%);
+        }
 
         /* Contenedor principal de la maqueta */
         #contenedor_1{
