@@ -1,7 +1,7 @@
 $(document).ready(function() {
     
 
-    cargarPelicula ();
+    cargar_pelicula ();
     inicializar();
 
 });
@@ -11,7 +11,7 @@ function inicializar(){
 }
 
 /*PREGUNTAS*/
-function cargarPelicula () {
+function cargar_pelicula () {
 
 
     $("#primeraPeli").on( {   
@@ -29,6 +29,8 @@ function cargarPelicula () {
             $("#primeraPeli").css("filter","contrast(100%)");
             $("#primeraPeli").css("filter","grayscale(0%)");
             $("#caratula_ampliada").attr("src", "./img/pel_acc.png");
+            $("#video").attr("src", "./video/video_01.mp4");
+            $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png");
            
             $(".imagenes_img_img").each(function(index) {
                 $(this).attr("src", "./img/pel_acc_0" + (index+1) +".png");
@@ -55,6 +57,8 @@ function cargarPelicula () {
             $("#segundaPeli").css("filter","contrast(100%)");
             $("#segundaPeli").css("filter","grayscale(0%)");
             $("#caratula_ampliada").attr("src", "./img/pel_ani.png");
+            $("#video").attr("src", "./video/video_02.mp4");
+            $("#z_multimediad_img_img").attr("src", "./img/pel_ani_01.png");
 
             $(".imagenes_img_img").each(function(index) {
                 $(this).attr("src", "./img/pel_ani_0" + (index+1) +".png");
@@ -63,6 +67,8 @@ function cargarPelicula () {
             $("figcaption").each(function(index) {
                 $(this).text("Anime " + (index+1));
             })
+
+            
            
         }
 
@@ -83,6 +89,8 @@ function cargarPelicula () {
             $("#terceraPeli").css("filter","contrast(100%)");
             $("#terceraPeli").css("filter","grayscale(0%)");
             $("#caratula_ampliada").attr("src", "./img/pel_med.png");
+            $("#video").attr("src", "./video/video_03.mp4");
+            $("#z_multimediad_img_img").attr("src", "./img/pel_med_01.png");
            
             $(".imagenes_img_img").each(function(index) {
                 $(this).attr("src", "./img/pel_med_0" + (index+1) +".png");
