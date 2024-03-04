@@ -306,7 +306,6 @@
                 
         }    
 
-
         .imagenSeleccionada{
             border: 10px solid red;
             filter: brightness(150%), grayscale(0%);

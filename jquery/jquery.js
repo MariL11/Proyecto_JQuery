@@ -1,9 +1,9 @@
 $(document).ready(function() {
     
     cargar_pelicula ();
-    elegirImagen();
+    seleccionarImagen();
     inicializar();
-    elegirPelicula();
+    seleccionarPelicula();
     comentarios();
     quitarSinopsis()
 });
@@ -18,24 +18,22 @@ function cargar_pelicula () {
 
     let peliculaSeleccionada = null;
 
-    
-    
 
     $("#primeraPeli, #segundaPeli, #terceraPeli").on({
         mouseenter: function() {
             if (!peliculaSeleccionada) {
                 $(this).css("filter", "brightness(150%)");
+            }else{
+                $(this).not(peliculaSeleccionada).css("filter", "brightness(150%)");
             }
         },
 
         mouseleave: function() {
             if (!peliculaSeleccionada) {
                 $(this).css("filter", "grayscale(100%)");
+            }else{
+                $(this).not(peliculaSeleccionada).css("filter", "grayscale(100%)");
             }
-        },
-
-        focus: function(){
-            $(this).css("filter", "contrast(150%)").css("border", "10px solid blue");
         },
 
         click: function() {
@@ -50,11 +48,11 @@ function cargar_pelicula () {
             $("#titulo").text($(this).attr("data-titulo"));
             $("#informacion").text($(this).attr("data-informacion"));
             $("#sinopsis").text($(this).attr("data-sinopsis"));
+            $("#caratula_ampliada").css("filter","grayscale(0%)");
 
 
             if(peliculaSeleccionada.is("#primeraPeli")) {
                 $(".imagenes_img_img").each(function(index) {
-
                     $(this).attr("src", "./img/pel_acc_0" + (index+1) +".png");
                 });
             }else if(peliculaSeleccionada.is("#segundaPeli")){
@@ -87,7 +85,8 @@ function cargar_pelicula () {
                 $("#video").attr("src", "./video/video_02.mp4");
                 $(".filtro").val("peli2");
              
-                $("#z_multimediad_img_img").attr("src", ruta);
+                
+              
 
                 $("figcaption").each(function(index) {
                     $(this).text("Anime " + (index+1));
@@ -101,7 +100,7 @@ function cargar_pelicula () {
                 $("#video").attr("src", "./video/video_03.mp4");
                 $(".filtro").val("peli3");
 
-                $("#z_multimediad_img_img").attr("src", ruta);
+              
 
                 $("figcaption").each(function(index) {
                     $(this).text("Historia " + (index+1));
@@ -120,65 +119,46 @@ function cargar_pelicula () {
 };
 
 
-function elegirImagen(){
+function seleccionarImagen(){
 
     //Preguntar
     $("#primeraPeli").click(function(){
         $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
-        $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png");
-        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "brightness(150%)").css("width","80%");
-        $(".circulo_selector_img").removeClass("circulos");
-        $(".circulo_selector_img").eq(0).addClass("circulos");
-        //console.log(onclick($(".circulo_selector_img")));
-        elegirImagenNoPredeterminada();
-        elegirCirculo();
+        $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png").css("filter","grayscale(0%)");
+        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+   
+        seleccionarImagenNoPredeterminada();
+        seleccionarCirculo(0);
         
     })
     
     $("#segundaPeli").click(function(){
         $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
-        $("#z_multimediad_img_img").attr("src", "./img/pel_ani_01.png");
-        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "brightness(150%)").css("width","80%");
-        $(".circulo_selector_img").removeClass("circulos");
-        $(".circulo_selector_img").eq(0).addClass("circulos");
-        //console.log(onclick($(".circulo_selector_img")));
-        elegirImagenNoPredeterminada();
-        elegirCirculo();
+        $("#z_multimediad_img_img").attr("src", "./img/pel_ani_01.png").css("filter","grayscale(0%)");
+        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+
+        seleccionarImagenNoPredeterminada();
+        seleccionarCirculo(0);
     })
 
     $("#terceraPeli").click(function(){
         $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
-        $("#z_multimediad_img_img").attr("src", "./img/pel_med_01.png");
-        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "brightness(150%)").css("width","80%");
-        $(".circulo_selector_img").removeClass("circulos");
-        $(".circulo_selector_img").eq(0).addClass("circulos");
-        //console.log(onclick($(".circulo_selector_img")));
-        elegirImagenNoPredeterminada();  
-        elegirCirculo(); 
+        $("#z_multimediad_img_img").attr("src", "./img/pel_med_01.png").css("filter","grayscale(0%)");
+        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+
+        seleccionarImagenNoPredeterminada();  
+        seleccionarCirculo(0); 
     })
     
 }
 
-function elegirImagenNoPredeterminada () {
-    $(".imagenes_img_img").on({
+function seleccionarImagenNoPredeterminada () {
 
-        click: function() {
+    $(".imagenes_img_img").click(function() {
 
             $(".imagenes_img_img").removeClass("imagenSeleccionada");
 
-            //Preguntar
-            $(this).addClass("imagenSeleccionada").css("filter", "brightness(150%)").css("width","80%");
-            //let a = e.target.selectedIndex;
-           
-            $(".imagenes_img_img").each(function(index){
-
-                /*if(a.is(".imagenes_img_img")){
-                    console.log(elegirCirculo(index));
-                    console.log(index);
-                }*/
-
-                //console.log(a);
-            });
+            $(this).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
             
 
             $(".imagenes_img_img").not(".imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
@@ -186,24 +166,47 @@ function elegirImagenNoPredeterminada () {
             let ruta = $(this).attr("src");
 
             $("#z_multimediad_img_img").attr("src", ruta);
-        }    
 
+            let indexImagen = $(".imagenes_img>figure>img").index(this);
 
-    }) 
+            seleccionarCirculo(indexImagen, ruta);
+    });   
+
 }
 
-function elegirCirculo (index) {
-    $(".circulo_selector_img").on({
-        click: function() {            
-            $(".circulo_selector_img").removeClass("circulos");
-            $(".circulo_selector_img").eq(index).addClass("circulos");
-            $(this).addClass("circulos");
-            
-        }
-    })
+
+function seleccionarCirculo (indexImagen) {           
+    $(".imagenes_nav>div").removeClass("circulos");
+    $(".imagenes_nav>div").eq(indexImagen).addClass("circulos");
+    $(this).addClass("circulos");
+
+    $(".imagenes_nav>div").click(function(){
+        let indexCirculo = $(".imagenes_nav>div").index(this);
+        $(".imagenes_nav>div").removeClass("circulos");
+        $(this).addClass("circulos");
+
+
+        $(".imagenes_img>figure>img").removeClass("imagenSeleccionada");
+        $(".imagenes_img>figure>img").eq(indexCirculo).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+        $(".imagenes_img>figure>img").not(".imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
+        
+        let ruta = $(".imagenes_img>figure>img").eq(indexCirculo).attr("src");
+        $("#z_multimediad_img_img").attr("src", ruta);
+
+        
+        console.log(indexCirculo);
+    });
+
+
+
 }
 
-function elegirPelicula(){
+
+function seleccionarPelicula(){
+
+    $('select').ready(function(){
+       peliculaSeleccionada = $("#primeraPeli").click(); 
+    });
 
     $('select').click(function() {
         if($(this).val()=="peli1") {
@@ -219,6 +222,8 @@ function elegirPelicula(){
 
 
 function comentarios(){
+
+    $("#comentario").hide();
 
     $("input[type=number]").attr('disabled',true);
     $("textarea").attr('disabled',true);
@@ -236,7 +241,16 @@ function comentarios(){
     })
 
 
-    //Preguntar parrafo
+    if($("input[type=text]").val().length>0){
+        if($("input[type=number]").val().length>0){
+            if($("textarea").val().length>0){
+                $("#comentario").show();
+    
+            }
+        }
+    }
+
+
 }
 
 
@@ -245,45 +259,19 @@ function quitarSinopsis(){
         click: function() {    
         if($("#mostrarSinopsis").prop("checked")){
             $(".pelicula").slideDown(4000, function() {
-                $(".descripcion").css("display", "none");
+                $(".descripcion").css("visibility", "hidden");
+                $(".pelicula").css("display", "flex");
                 
             });
 
         }else{
-            $(".descripcion").css("display", "visble");
+            $(".descripcion").css("visibility", "visible");
         }
     }
     });
 
 }
 
-
-
-
-    /*click: function(){
-
-            $("#primeraPeli, #segundaPeli, #terceraPeli").removeClass("peliSeleccionada");
-
-            $(this).addClass("peliSeleccionada");
-
-            $("#primeraPeli, #segundaPeli, #terceraPeli").not(".peliSeleccionada").css("filter", "grayscale(100%)");
-
-            $("#primeraPeli").click(function(){
-                $("#caratula_ampliada").attr("src", "./img/pel_acc.png");
-                $("#video").attr("src", "./video/video_01.mp4");
-                $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png");
-        
-                $(".imagenes_img_img").each(function(index) {
-                    $(this).attr("src", "./img/pel_acc_0" + (index+1) +".png");
-                });
-        
-                $("figcaption").each(function(index) {
-                    $(this).text("Acción " + (index+1));
-                })
-
-                $("#titulo").text("Título: " + $(this).attr("data-titulo"));
-        
-            });*/ 
 
 
 

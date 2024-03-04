@@ -39,42 +39,42 @@
                 
                 <!-- Imagen individual, se repite 5 veces -->
                 <figure>
-                    <img class="imagenes_img_img" src="./img/pel_acc_01.png" alt="Imagen de película">
+                    <img id="1" class="imagenes_img_img" src="./img/pel_acc_01.png" alt="Imagen de película">
                     <figcaption class="descripcion_img">Acción 1</figcaption>
                 </figure>
                 <figure>
-                    <img class="imagenes_img_img" src="./img/pel_acc_02.png" alt="Ordenador con código">
+                    <img id="2" class="imagenes_img_img" src="./img/pel_acc_02.png" alt="Ordenador con código">
                     <figcaption class="descripcion_img">Acción 2</figcaption>
                 </figure>
                 <figure>
-                    <img class="imagenes_img_img" src="./img/pel_acc_03.png" alt="Ordenador con código">
+                    <img id="3" class="imagenes_img_img" src="./img/pel_acc_03.png" alt="Ordenador con código">
                     <figcaption class="descripcion_img">Acción 3</figcaption>
                 </figure>
                 <figure>
-                    <img class="imagenes_img_img" src="./img/pel_acc_04.png" alt="Ordenador con código">
+                    <img id="4" class="imagenes_img_img" src="./img/pel_acc_04.png" alt="Ordenador con código">
                     <figcaption class="descripcion_img">Acción 4</figcaption>
                 </figure>
                 <figure>
-                    <img class="imagenes_img_img" src="./img/pel_acc_05.png" alt="Ordenador con código">
+                    <img id="5" class="imagenes_img_img" src="./img/pel_acc_05.png" alt="Ordenador con código">
                     <figcaption class="descripcion_img">Acción 5</figcaption>
                 </figure>
             </div>
 
             <!-- Circulos de navegación, al pulsarlos debería mostrarse una imagen individual -->
             <div class="imagenes_nav">
-                <div class="circulo_selector_img">
+                <div id="circulo_1" class="circulo_selector_img">
 
                 </div> 
-                <div class="circulo_selector_img">
+                <div id="circulo_2" class="circulo_selector_img">
 
                 </div> 
-                <div class="circulo_selector_img">
+                <div id="circulo_3" class="circulo_selector_img">
 
                 </div> 
-                <div class="circulo_selector_img">
+                <div id="circulo_4" class="circulo_selector_img">
 
                 </div> 
-                <div class="circulo_selector_img">
+                <div id="circulo_5" class="circulo_selector_img">
 
                 </div> 
 
@@ -127,7 +127,7 @@
                    <div class="c_valoraciones">
                         <label>Valoración</label>
                         <br>
-                        <input type="number">
+                        <input type="number" min="0" max="5">
                         <br>
                         <label>Comentario</label>
                         <textarea rows="4"></textarea>
@@ -140,8 +140,7 @@
 
                 <!-- Zona donde se muestran los comentarios y valoraciones introducidas-->
                 <div class="z_valoraciones">
-                    <p>Insertar los comentarios - Usuario - Película - Valoración y Comentario</p>
-                    <p>Insertar los comentarios - Usuario - Película - Valoración y Comentario</p>
+                    <p id="comentario">Insertar los comentarios - Usuario - Película - Valoración y Comentario</p>
                 </div>
 
                 
@@ -151,8 +150,7 @@
 
             <h2>Configuración</h2>
             <select class="filtro">
-                <option selected disabled>Seleccione una película</option>
-                <option value="peli1">Mad Max</option>
+                <option selected value="peli1">Mad Max</option>
                 <option value="peli2">Akira</option>
                 <option value="peli3">Troya</option>
               </select>
