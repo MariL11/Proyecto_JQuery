@@ -5,7 +5,10 @@ $(document).ready(function() {
     inicializar();
     seleccionarPelicula();
     comentarios();
-    quitarSinopsis()
+    quitarSinopsis();
+    invertirOrden();
+    quitarVideo();
+
 });
 
 function inicializar(){
@@ -122,7 +125,7 @@ function cargar_pelicula () {
 function seleccionarImagen(){
 
     //Preguntar
-    $("#primeraPeli").click(function(){
+    $("#primeraPeli, #segundaPeli, #terceraPeli").click(function(){
         $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
         $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png").css("filter","grayscale(0%)");
         $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
@@ -132,23 +135,7 @@ function seleccionarImagen(){
         
     })
     
-    $("#segundaPeli").click(function(){
-        $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
-        $("#z_multimediad_img_img").attr("src", "./img/pel_ani_01.png").css("filter","grayscale(0%)");
-        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
 
-        seleccionarImagenNoPredeterminada();
-        seleccionarCirculo(0);
-    })
-
-    $("#terceraPeli").click(function(){
-        $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
-        $("#z_multimediad_img_img").attr("src", "./img/pel_med_01.png").css("filter","grayscale(0%)");
-        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
-
-        seleccionarImagenNoPredeterminada();  
-        seleccionarCirculo(0); 
-    })
     
 }
 
@@ -223,7 +210,7 @@ function seleccionarPelicula(){
 
 function comentarios(){
 
-    $("#comentario").hide();
+    //$("#comentario").hide();
 
     $("input[type=number]").attr('disabled',true);
     $("textarea").attr('disabled',true);
@@ -234,6 +221,8 @@ function comentarios(){
             $("input[type=number]").attr('disabled',false);
             $("textarea").attr('disabled',false);
         } else {
+            $("input[type=number]").val('');
+            $("textarea").val('');
             $("input[type=number]").attr('disabled',true);
             $("textarea").attr('disabled',true);
         }
@@ -250,31 +239,77 @@ function comentarios(){
         }
     }
 
+    $("#cancelar").click(function(){
+        $("#comentario").val('');
+    });
+
 
 }
 
 
 function quitarSinopsis(){
-    $("#mostrarSinopsis").on({
-        click: function() {    
+    $("#mostrarSinopsis").click(function() { 
         if($("#mostrarSinopsis").prop("checked")){
-            $(".pelicula").slideDown(4000, function() {
-                $(".descripcion").css("visibility", "hidden");
-                $(".pelicula").css("display", "flex");
-                
+
+            $(".descripcion").slideUp("slow", function(){
+                $(".descripcion").css("display","none");
+                let cadena = '"nav header header" "nav pelicula imagenes" "nav pelicula contenidos" "nav pelicula contenidos" "nav pelicula contenidos" "footer footer footer"';
+                $("#contenedor_1").css("grid-template-areas", cadena);
             });
-
+            
         }else{
-            $(".descripcion").css("visibility", "visible");
+            let cadena = '"nav header header" "nav pelicula imagenes" "nav pelicula contenidos" "nav descripcion contenidos" "nav descripcion contenidos" "footer footer footer"';
+            $("#contenedor_1").css("grid-template-areas", cadena);
+            $(".descripcion").css("display","flex");
+            $(".descripcion").css("flex-direction","column");
         }
-    }
-    });
+    })
+    
 
+}
+
+function quitarVideo(){
+    $("#quitarVideo").click(function(){
+        if($("#quitarVideo").prop("checked")){
+            $(".z_multimedia_video").fadeOut("slow", function(){
+                $(".z_multimedia_video").css("height", "150%");
+                $(".z_multimedia_video").css("display", "none");
+            });
+        }else{
+            $(".z_multimedia_video").css("height", "100%");
+            $(".z_multimedia_video").css("display", "flex");
+        }
+    });
+}
+
+
+function invertirOrden(){
+    $("#invertirOrdenImg").click(function(){
+        if($("#invertirOrdenImg").prop("checked")){
+            $(".imagenes_img").fadeOut("slow", function(){
+                $(".imagenes_img").css("flex-direction","row-reverse");
+                $(".imagenes_img").fadeIn("slow");
+            });
+            $(".imagenes_nav").fadeOut("slow",function(){
+                $(".imagenes_nav").css("flex-direction","row-reverse");
+                $(".imagenes_nav").fadeIn("slow");
+            });
+        }else{
+            $(".imagenes_img").fadeOut("slow", function(){
+                $(".imagenes_img").css("flex-direction","row");
+                $(".imagenes_img").fadeIn("slow");
+            });
+            $(".imagenes_nav").fadeOut("slow",function(){
+                $(".imagenes_nav").css("flex-direction","row");
+                $(".imagenes_nav").fadeIn("slow");
+            });
+        }
+    });
 }
 
 
 
 
-// Preguntar DATA-, descripcion (data-), clases, titulo de la descripcion, estilo(function elegirImagen), Valoración (0-5)
+
 
 
