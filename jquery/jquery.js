@@ -1,3 +1,4 @@
+//Función para cargar todas las funciónes al iniciar el documento.
 $(document).ready(function() {
     
     cargar_pelicula ();
@@ -8,15 +9,21 @@ $(document).ready(function() {
     quitarSinopsis();
     invertirOrden();
     quitarVideo();
+    menuCarrusel();
+    desactivarEdicion();
+    comienzoVideo();
+    cambiarColor();
+    cambiarFuente();
 
 });
 
+//Función para inicializar, añade una escala de grises.
 function inicializar(){
     $("img").css("filter","grayscale(100%)");
 }
 
 
-
+//Función de cargar_pelicula, carga cualquiera de las tres peliculas.
 function cargar_pelicula () {
 
     let peliculaSeleccionada = null;
@@ -121,10 +128,9 @@ function cargar_pelicula () {
 
 };
 
-
+//Funcion seleccionarImagen, aplica el filtro a la imagen de la película seleccionada.
 function seleccionarImagen(){
 
-    //Preguntar
     $("#primeraPeli, #segundaPeli, #terceraPeli").click(function(){
         $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
         $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png").css("filter","grayscale(0%)");
@@ -139,6 +145,7 @@ function seleccionarImagen(){
     
 }
 
+//Funcion seleccionarImagenNoPredeterminada, aplica el filtro a la imagen seleccionada de la película.
 function seleccionarImagenNoPredeterminada () {
 
     $(".imagenes_img_img").click(function() {
@@ -157,11 +164,68 @@ function seleccionarImagenNoPredeterminada () {
             let indexImagen = $(".imagenes_img>figure>img").index(this);
 
             seleccionarCirculo(indexImagen, ruta);
+
     });   
 
 }
 
+//Función menú carrusel, crea un intervalo para pasar a la siguiente imagen cada 3 segundos.
+function menuCarrusel (){
+    let intervalo;
+    let numImagen = 0;
+    $("#menuCarrusel").click(function(){
+        if($("#menuCarrusel").prop("checked")){          
+            intervalo = setInterval(function () {
+                
+                if(numImagen>=4) {
+                    numImagen -= 4;
+                    seleccionarCirculo(numImagen);
+                    $(".imagenes_img>figure>img").fadeOut("slow", function(){
+                        $(".imagenes_img>figure>img").fadeIn("slow");
+                        $(".imagenes_img>figure>img").removeClass("imagenSeleccionada");
+                        $(".imagenes_img>figure>img").eq(numImagen).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+                        $(".imagenes_img>figure>img").not(".imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
+                        
+                        let ruta = $(".imagenes_img>figure>img").eq(numImagen).attr("src");
+                        $("#z_multimediad_img_img").attr("src", ruta);
+                    });
+                    
+                } else {
+                    numImagen += 1;
+                    seleccionarCirculo(numImagen);
+                    $(".imagenes_img>figure>img").fadeOut("slow", function(){
+                        $(".imagenes_img>figure>img").fadeIn("slow");
+                        $(".imagenes_img>figure>img").removeClass("imagenSeleccionada");
+                        $(".imagenes_img>figure>img").eq(numImagen).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+                        $(".imagenes_img>figure>img").not(".imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
+                        
+                        let ruta = $(".imagenes_img>figure>img").eq(numImagen).attr("src");
+                        $("#z_multimediad_img_img").attr("src", ruta);
+                    });
+                }
+                
+            }, 3000);  
 
+        } else {
+            clearInterval(intervalo);
+        }
+    });
+
+    $(".imagenes_img_img").click(function(){
+        clearInterval(intervalo);
+        $("#menuCarrusel").prop("checked", false);   
+        numImagen = $(".imagenes_img_img").index(this);
+    });
+
+    $(".imagenes_nav>div").click(function(){
+        clearInterval(intervalo);
+        $("#menuCarrusel").prop("checked", false);   
+        numImagen = $(".imagenes_nav>div").index(this);
+    });
+
+}
+
+/*Función que permite hace click sobre un círculo y seleccione la imagen que le corresponde */
 function seleccionarCirculo (indexImagen) {           
     $(".imagenes_nav>div").removeClass("circulos");
     $(".imagenes_nav>div").eq(indexImagen).addClass("circulos");
@@ -188,7 +252,7 @@ function seleccionarCirculo (indexImagen) {
 
 }
 
-
+//Función seleccionarPelicula, agrega a la variable el id de la pelicula desde el desplegable.
 function seleccionarPelicula(){
 
     $('select').ready(function(){
@@ -205,48 +269,66 @@ function seleccionarPelicula(){
         }
     });
 
+
 }
 
-
+//Función comentarios, agrega los comentarios a la sección de comentarios y desactiva la edición.
 function comentarios(){
 
-    //$("#comentario").hide();
-
-    $("input[type=number]").attr('disabled',true);
+    $("#comentario").remove();
+    $("#valoracion").attr('disabled',true);
     $("textarea").attr('disabled',true);
 
 
     $("input[type=text]").keyup(function() {
         if($("input[type=text]").val()!="") {
-            $("input[type=number]").attr('disabled',false);
+            $("#valoracion").attr('disabled',false);
             $("textarea").attr('disabled',false);
         } else {
-            $("input[type=number]").val('');
+            $("#valoracion").val('');
             $("textarea").val('');
-            $("input[type=number]").attr('disabled',true);
+            $("#valoracion").attr('disabled',true);
             $("textarea").attr('disabled',true);
         }
 
     })
 
-
-    if($("input[type=text]").val().length>0){
-        if($("input[type=number]").val().length>0){
-            if($("textarea").val().length>0){
-                $("#comentario").show();
-    
-            }
+    $("#aceptar").click(function(){
+        if(($("input[type=text]").val().length>0) && ($("#valoracion").val().length>0) && ($("textarea").val().length>0)){
+            $(".z_valoraciones").append("<div class='comentarioUsuario'><p id='" + $(".c_usuario input").val() + "'>" + $("input[type=text]").val() + " - " +  $("#titulo").text()  + " - " + $("#valoracion").val()  + " - " + $("textarea").val() + "</p><button id='botonEliminar'>Eliminar</button></div>");
         }
-    }
+     });
 
-    $("#cancelar").click(function(){
-        $("#comentario").val('');
+     $("#desactivarEdicion").click(function(){
+        if($(".z_valoraciones").prop("checked")){
+            $("#comentarioUsuario").each(function(index) {
+                
+            });
+            $("#botonEliminar").attr('disabled',true);
+        } else {
+            $("#comentarioUsuario").each(function(index) {
+                $("#botonEliminar").eq(index).attr('disabled',false);
+            });
+        }
+     });
+        
+    $(".z_valoraciones").on("click", "#botonEliminar", function() {
+        if($(this).prev("p").attr("id") == $(".c_usuario input").val()){
+            $(this).closest(".comentarioUsuario").remove();            
+        }
     });
 
 
+    $("#cancelar").click(function(){
+        $("input[type=text]").val('');
+        $("#valoracion").val('');
+        $("textarea").val('');
+    });
+
+    desactivarEdicion("#botonEliminar");
 }
 
-
+/*Función que permite quitar la descripción de la película seleccionada y desplaza la imagen aumentada de la peli a esa zona*/
 function quitarSinopsis(){
     $("#mostrarSinopsis").click(function() { 
         if($("#mostrarSinopsis").prop("checked")){
@@ -268,21 +350,23 @@ function quitarSinopsis(){
 
 }
 
-function quitarVideo(){
-    $("#quitarVideo").click(function(){
-        if($("#quitarVideo").prop("checked")){
+//Función quitarVideo para quitar el video y agrandar la imagen al máximo.
+function quitarVideo() {
+    $("#mostrarVideo").click( function() {
+        if($("#mostrarVideo").prop("checked")){
             $(".z_multimedia_video").fadeOut("slow", function(){
-                $(".z_multimedia_video").css("height", "150%");
-                $(".z_multimedia_video").css("display", "none");
+                $(".z_multimedia_img").css("height","38rem");
+                $(".z_multimedia_video").css("display","none");
             });
-        }else{
-            $(".z_multimedia_video").css("height", "100%");
-            $(".z_multimedia_video").css("display", "flex");
+        } else {
+            $(".z_multimedia_img").css("height","22rem");
+            $(".z_multimedia_video").css("height","16rem");
+            $(".z_multimedia_video").css("display","flex");
         }
     });
 }
 
-
+/*Función que permite invertir el orden de las imágenes del nav junto a las circunferencias */
 function invertirOrden(){
     $("#invertirOrdenImg").click(function(){
         if($("#invertirOrdenImg").prop("checked")){
@@ -305,6 +389,70 @@ function invertirOrden(){
             });
         }
     });
+}
+
+
+/*Función que permite desactivar la introducción de datos en el formulación y eliminar comentarios existentes */
+function desactivarEdicion(boton){
+    $("#desactivarEdicion").click(function(){
+        if($("#desactivarEdicion").prop("checked")){
+            $("input[type=text]").attr('disabled',true);
+            $("#valoracion").attr('disabled',true);
+            $("textarea").attr('disabled',true);
+            $(boton).attr('disabled',true);
+
+        }else{
+            $("input[type=text]").attr('disabled',false);
+            $("#valoracion").attr('disabled',false);
+            $("textarea").attr('disabled',false);
+            $(boton).attr('disabled',false);
+        }
+
+    });
+}
+
+/*Función que permite comenzar el vídeo por el segundo seleccionado (0s - 20s)*/
+function comienzoVideo(){
+    $("#segundos").css("width", "200px");
+
+    $("#segundos").change(function() {
+        $("#video")[0].currentTime = $(this).val();
+    });
+}
+
+/*Función que permite cambiar el color del fondo, de las palabras y de los bordes de la pçagina web*/
+function cambiarColor(){
+    $("#cambiarColor").click(function(){
+        if($("#cambiarColor").prop("checked")){
+            $("body").css("background-color","black");
+            $("body").css("color","white");
+            $("header").css("border","2px solid white");
+            $("div").not(".imagenes_img, .imagenes_nav, #contenedor_1, .contenidos, .z_multimedia_img, .z_multimedia_video").css("border","2px solid white");
+            $("nav").css("border","2px solid white");
+            $("main").css("border","2px solid white");
+            $("footer").css("border","2px solid white");
+        }else{
+            $("body").css("background-color","white");
+            $("body").css("color","black");
+            $("header").css("border","2px solid black");
+            $("div").not(".imagenes_img, .imagenes_nav, #contenedor_1, .contenidos, .z_multimedia_img, .z_multimedia_video").css("border","2px solid black");
+            $("nav").css("border","2px solid black");
+            $("main").css("border","2px solid black");
+            $("footer").css("border","2px solid black");
+        }
+
+    });
+}
+
+/*Función que permite cambiar la fuente de los textos (menos el título)*/
+function cambiarFuente() {
+    $("#cambiarFuente").click(function() {
+        if($("#cambiarFuente").prop("checked")) {
+            $("body").not("#titulo").css("font-family","monospace");
+        }else{
+            $("body").not("#titulo").css("font-family","Times New Roman");
+        }
+    })
 }
 
 

@@ -21,7 +21,7 @@
             /* Definimos la seoaración */
             grid-gap: 5px;
             /* Definimos las celdas*/
-            grid-template-areas:    "nav header header "
+            grid-template-areas:    "nav header header"
                                     "nav pelicula imagenes"
                                     "nav pelicula contenidos"
                                     "nav descripcion contenidos"
