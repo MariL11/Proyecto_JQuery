@@ -77,7 +77,6 @@ function cargar_pelicula () {
 
                
             $("#primeraPeli").click(function(){
-
                 $("#caratula_ampliada").attr("src", "./img/pel_acc.png");
                 $("#video").attr("src", "./video/video_01.mp4");
                 $(".filtro").val("peli1");
@@ -87,7 +86,6 @@ function cargar_pelicula () {
                 })
 
                 
-                
             });
 
             $("#segundaPeli").click(function(){
@@ -95,8 +93,6 @@ function cargar_pelicula () {
                 $("#video").attr("src", "./video/video_02.mp4");
                 $(".filtro").val("peli2");
              
-                
-              
 
                 $("figcaption").each(function(index) {
                     $(this).text("Anime " + (index+1));
@@ -110,13 +106,11 @@ function cargar_pelicula () {
                 $("#video").attr("src", "./video/video_03.mp4");
                 $(".filtro").val("peli3");
 
-              
 
                 $("figcaption").each(function(index) {
                     $(this).text("Historia " + (index+1));
                 })
             
-               
         
         });
         }
@@ -276,43 +270,32 @@ function seleccionarPelicula(){
 function comentarios(){
 
     $("#comentario").remove();
-    $("#valoracion").attr('disabled',true);
-    $("textarea").attr('disabled',true);
+    $("#valoracion, textarea").attr('disabled',true);
 
 
     $("input[type=text]").keyup(function() {
         if($("input[type=text]").val()!="") {
-            $("#valoracion").attr('disabled',false);
-            $("textarea").attr('disabled',false);
+            $("#valoracion, textarea").attr('disabled',false);
         } else {
-            $("#valoracion").val('');
-            $("textarea").val('');
-            $("#valoracion").attr('disabled',true);
-            $("textarea").attr('disabled',true);
+            $("#valoracion, textarea").val('');
+            $("#valoracion, textarea").attr('disabled',true);
         }
 
     })
 
     $("#aceptar").click(function(){
-        if(($("input[type=text]").val().length>0) && ($("#valoracion").val().length>0) && ($("textarea").val().length>0)){
-            $(".z_valoraciones").append("<div class='comentarioUsuario'><p id='" + $(".c_usuario input").val() + "'>" + $("input[type=text]").val() + " - " +  $("#titulo").text()  + " - " + $("#valoracion").val()  + " - " + $("textarea").val() + "</p><button id='botonEliminar'>Eliminar</button></div>");
+        if(($("input[type=text]").val().length>0) && ($("#valoracion").val().length>0) && ($("#valoracion").val() >= 0) && ($("#valoracion").val() <= 5) && ($("textarea").val().length>0)){
+            $(".z_valoraciones").append("<div class='comentarioUsuario'><p id='" + $(".c_usuario input").val() + "'>" + $("input[type=text]").val() + " - " +  $("#titulo").text()  + " - " + $("#valoracion").val()  + " - " + $("textarea").val() + "</p><button class='botonEliminar'>Eliminar</button></div>");
         }
      });
 
      $("#desactivarEdicion").click(function(){
         if($(".z_valoraciones").prop("checked")){
-            $("#comentarioUsuario").each(function(index) {
-                
-            });
-            $("#botonEliminar").attr('disabled',true);
-        } else {
-            $("#comentarioUsuario").each(function(index) {
-                $("#botonEliminar").eq(index).attr('disabled',false);
-            });
-        }
+            $("input[type=text], #valoracion, textarea, .botonEliminar").prop('disabled',true);
+        } 
      });
         
-    $(".z_valoraciones").on("click", "#botonEliminar", function() {
+    $(".z_valoraciones").on("click", ".botonEliminar", function() {
         if($(this).prev("p").attr("id") == $(".c_usuario input").val()){
             $(this).closest(".comentarioUsuario").remove();            
         }
@@ -320,12 +303,10 @@ function comentarios(){
 
 
     $("#cancelar").click(function(){
-        $("input[type=text]").val('');
-        $("#valoracion").val('');
-        $("textarea").val('');
+        $("input[type=text], #valoracion, textarea").val('');
     });
 
-    desactivarEdicion("#botonEliminar");
+    desactivarEdicion(".botonEliminar");
 }
 
 /*Función que permite quitar la descripción de la película seleccionada y desplaza la imagen aumentada de la peli a esa zona*/
@@ -396,15 +377,11 @@ function invertirOrden(){
 function desactivarEdicion(boton){
     $("#desactivarEdicion").click(function(){
         if($("#desactivarEdicion").prop("checked")){
-            $("input[type=text]").attr('disabled',true);
-            $("#valoracion").attr('disabled',true);
-            $("textarea").attr('disabled',true);
+            $("input[type=text], #valoracion, textarea").attr('disabled',true);
             $(boton).attr('disabled',true);
 
         }else{
-            $("input[type=text]").attr('disabled',false);
-            $("#valoracion").attr('disabled',false);
-            $("textarea").attr('disabled',false);
+            $("input[type=text], #valoracion, textarea").attr('disabled',false);
             $(boton).attr('disabled',false);
         }
 
