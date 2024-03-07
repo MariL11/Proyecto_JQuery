@@ -1,4 +1,4 @@
-//Función para cargar todas las funciónes al iniciar el documento.
+//Permite cargar todas las funciónes al iniciar el documento.
 $(document).ready(function() {
     
     cargar_pelicula ();
@@ -26,10 +26,13 @@ function inicializar(){
 //Función de cargar_pelicula, carga toda los datos de cualquier pelicula seleccionada.
 function cargar_pelicula () {
 
+    //Variable para guardar la película que ha sido seleccionada
     let peliculaSeleccionada = null;
 
 
     $("#primeraPeli, #segundaPeli, #terceraPeli").on({
+
+        /*Al pasar el ratón por encima de una película se añadirán ciertos filtros*/
         mouseenter: function() {
             if (!peliculaSeleccionada) {
                 $(this).css("filter", "brightness(150%)");
@@ -38,6 +41,7 @@ function cargar_pelicula () {
             }
         },
 
+        /*Al quitar el ratón de una película se pondrán ciertos filtros*/
         mouseleave: function() {
             if (!peliculaSeleccionada) {
                 $(this).css("filter", "grayscale(100%)");
@@ -46,6 +50,7 @@ function cargar_pelicula () {
             }
         },
 
+        /*Al hacer click sobre una película, se cargará los datos de esa peli*/
         click: function() {
 
             if (peliculaSeleccionada){
@@ -122,7 +127,7 @@ function cargar_pelicula () {
 
 };
 
-//Funcion seleccionarImagen, aplica el filtro a la imagen de la película seleccionada.
+//Funcion seleccionarImagen, aplica un filtro destacable a la imagen seleccionada de la zona de navegación de la película seleccionada.
 function seleccionarImagen(){
 
     $("#primeraPeli, #segundaPeli, #terceraPeli").click(function(){
@@ -130,6 +135,7 @@ function seleccionarImagen(){
         $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png").css("filter","grayscale(0%)");
         $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
    
+        //
         seleccionarImagenNoPredeterminada();
         seleccionarCirculo(0);
         
@@ -138,7 +144,7 @@ function seleccionarImagen(){
 }
 
 
-//Funcion seleccionarImagenNoPredeterminada, aplica el filtro a la imagen seleccionada de la película.
+//Funcion seleccionarImagenNoPredeterminada, aplica el filtro a la imagen seleccionada (imagen que no es la establecida cuando se hace click sobre una película) de la película.
 function seleccionarImagenNoPredeterminada () {
 
     $(".imagenes_img_img").click(function() {
@@ -205,12 +211,14 @@ function menuCarrusel (){
         }
     });
 
+    //Al hacer click sobre una imagen, el carrusel se desactiva
     $(".imagenes_img_img").click(function(){
         clearInterval(intervalo);
         $("#menuCarrusel").prop("checked", false);   
         numImagen = $(".imagenes_img_img").index(this);
     });
 
+    //Al hacer click sobre un círculo, el carrusel se desactiva
     $(".imagenes_nav>div").click(function(){
         clearInterval(intervalo);
         $("#menuCarrusel").prop("checked", false);   
@@ -274,7 +282,7 @@ function comentarios(){
     $("#comentario").remove();
     $("#valoracion, textarea").attr('disabled',true);
 
-
+    //Al rellenar el campo usuario, activa los demás campos
     $("input[type=text]").keyup(function() {
         if($("input[type=text]").val()!="") {
             $("#valoracion, textarea").attr('disabled',false);
@@ -285,25 +293,28 @@ function comentarios(){
 
     })
 
+    //Permite añadir un comentario al rellenar correctamente el formulario y pulsar el botón añadir
     $("#aceptar").click(function(){
         if(($("input[type=text]").val().length>0) && ($("#valoracion").val().length>0) && ($("#valoracion").val() >= 0) && ($("#valoracion").val() <= 5) && ($("textarea").val().length>0)){
             $(".z_valoraciones").append("<div class='comentarioUsuario'><p id='" + $(".c_usuario input").val() + "'>" + $("input[type=text]").val() + " - " +  $("#titulo").text()  + " - " + $("#valoracion").val()  + " - " + $("textarea").val() + "</p><button class='botonEliminar'>Eliminar</button></div>");
         }
      });
 
+     //Desactiva la opción de eliminar un comentario y en escribir en el formulario
      $("#desactivarEdicion").click(function(){
         if($(".z_valoraciones").prop("checked")){
             $("input[type=text], #valoracion, textarea, .botonEliminar").prop('disabled',true);
         } 
      });
         
+    //Elimina un comentario al hacer click sobre el botón elimimar que le corresponde
     $(".z_valoraciones").on("click", ".botonEliminar", function() {
         if($(this).prev("p").attr("id") == $(".c_usuario input").val()){
             $(this).closest(".comentarioUsuario").remove();            
         }
     });
 
-
+    // Elimina la información que haya introducida en el formulario
     $("#cancelar").click(function(){
         $("input[type=text], #valoracion, textarea").val('');
     });
