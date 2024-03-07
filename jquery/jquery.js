@@ -23,7 +23,7 @@ function inicializar(){
 }
 
 
-//Función de cargar_pelicula, carga cualquiera de las tres peliculas.
+//Función de cargar_pelicula, carga toda los datos de cualquier pelicula seleccionada.
 function cargar_pelicula () {
 
     let peliculaSeleccionada = null;
@@ -134,10 +134,9 @@ function seleccionarImagen(){
         seleccionarCirculo(0);
         
     })
-    
 
-    
 }
+
 
 //Funcion seleccionarImagenNoPredeterminada, aplica el filtro a la imagen seleccionada de la película.
 function seleccionarImagenNoPredeterminada () {
@@ -162,6 +161,7 @@ function seleccionarImagenNoPredeterminada () {
     });   
 
 }
+
 
 //Función menú carrusel, crea un intervalo para pasar a la siguiente imagen cada 3 segundos.
 function menuCarrusel (){
@@ -219,7 +219,8 @@ function menuCarrusel (){
 
 }
 
-/*Función que permite hace click sobre un círculo y seleccione la imagen que le corresponde */
+
+/*Función seleccionarCirculo, permite hace click sobre un círculo y seleccione la imagen que le corresponde */
 function seleccionarCirculo (indexImagen) {           
     $(".imagenes_nav>div").removeClass("circulos");
     $(".imagenes_nav>div").eq(indexImagen).addClass("circulos");
@@ -238,13 +239,13 @@ function seleccionarCirculo (indexImagen) {
         let ruta = $(".imagenes_img>figure>img").eq(indexCirculo).attr("src");
         $("#z_multimediad_img_img").attr("src", ruta);
 
-        
-        console.log(indexCirculo);
+
     });
 
 
 
 }
+
 
 //Función seleccionarPelicula, agrega a la variable el id de la pelicula desde el desplegable.
 function seleccionarPelicula(){
@@ -265,6 +266,7 @@ function seleccionarPelicula(){
 
 
 }
+
 
 //Función comentarios, agrega los comentarios a la sección de comentarios y desactiva la edición.
 function comentarios(){
@@ -309,7 +311,8 @@ function comentarios(){
     desactivarEdicion(".botonEliminar");
 }
 
-/*Función que permite quitar la descripción de la película seleccionada y desplaza la imagen aumentada de la peli a esa zona*/
+
+/*Función quitarSinopsis, permite quitar la descripción de la película seleccionada y desplaza la imagen aumentada de la peli a esa zona*/
 function quitarSinopsis(){
     $("#mostrarSinopsis").click(function() { 
         if($("#mostrarSinopsis").prop("checked")){
@@ -331,7 +334,8 @@ function quitarSinopsis(){
 
 }
 
-//Función quitarVideo para quitar el video y agrandar la imagen al máximo.
+
+//Función quitarVideo, permite quitar el video y agrandar la imagen al máximo para ocupar el espacio vacío dejado.
 function quitarVideo() {
     $("#mostrarVideo").click( function() {
         if($("#mostrarVideo").prop("checked")){
@@ -347,7 +351,8 @@ function quitarVideo() {
     });
 }
 
-/*Función que permite invertir el orden de las imágenes del nav junto a las circunferencias */
+
+/*Función invertirOrden, permite invertir el orden de las imágenes del nav junto a las circunferencias */
 function invertirOrden(){
     $("#invertirOrdenImg").click(function(){
         if($("#invertirOrdenImg").prop("checked")){
@@ -373,7 +378,7 @@ function invertirOrden(){
 }
 
 
-/*Función que permite desactivar la introducción de datos en el formulación y eliminar comentarios existentes */
+/*Función desactivarEdicion, permite desactivar la introducción de datos en el formulación y eliminar comentarios existentes */
 function desactivarEdicion(boton){
     $("#desactivarEdicion").click(function(){
         if($("#desactivarEdicion").prop("checked")){
@@ -388,7 +393,8 @@ function desactivarEdicion(boton){
     });
 }
 
-/*Función que permite comenzar el vídeo por el segundo seleccionado (0s - 20s)*/
+
+/*Función comienzoVideo, permite comenzar el vídeo por el segundo seleccionado (0s - 20s)*/
 function comienzoVideo(){
     $("#segundos").css("width", "200px");
 
@@ -397,31 +403,27 @@ function comienzoVideo(){
     });
 }
 
-/*Función que permite cambiar el color del fondo, de las palabras y de los bordes de la pçagina web*/
+
+/*Función cambiarColor, permite cambiar el color del fondo, de las palabras y de los bordes de la pçagina web*/
 function cambiarColor(){
     $("#cambiarColor").click(function(){
         if($("#cambiarColor").prop("checked")){
             $("body").css("background-color","black");
             $("body").css("color","white");
-            $("header").css("border","2px solid white");
+            $("header, nav, main, footer").css("border","2px solid white");
             $("div").not(".imagenes_img, .imagenes_nav, #contenedor_1, .contenidos, .z_multimedia_img, .z_multimedia_video").css("border","2px solid white");
-            $("nav").css("border","2px solid white");
-            $("main").css("border","2px solid white");
-            $("footer").css("border","2px solid white");
         }else{
             $("body").css("background-color","white");
             $("body").css("color","black");
-            $("header").css("border","2px solid black");
+            $("header, nav, main, footer").css("border","2px solid black");
             $("div").not(".imagenes_img, .imagenes_nav, #contenedor_1, .contenidos, .z_multimedia_img, .z_multimedia_video").css("border","2px solid black");
-            $("nav").css("border","2px solid black");
-            $("main").css("border","2px solid black");
-            $("footer").css("border","2px solid black");
         }
 
     });
 }
 
-/*Función que permite cambiar la fuente de los textos (menos el título)*/
+
+/*Función cambiarFuente, permite cambiar la fuente de los textos (menos el título)*/
 function cambiarFuente() {
     $("#cambiarFuente").click(function() {
         if($("#cambiarFuente").prop("checked")) {
