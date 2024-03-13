@@ -135,11 +135,29 @@ function seleccionarImagen(){
         $("#z_multimediad_img_img").attr("src", "./img/pel_acc_01.png").css("filter","grayscale(0%)");
         $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
    
-        //
         seleccionarImagenNoPredeterminada();
         seleccionarCirculo(0);
         
     })
+
+    $("#segundaPeli").click(function(){
+        $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
+        $("#z_multimediad_img_img").attr("src", "./img/pel_ani_01.png").css("filter","grayscale(0%)");
+        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+   
+        seleccionarImagenNoPredeterminada();
+        seleccionarCirculo(0);
+    })
+
+    $("#terceraPeli").click(function(){
+        $(".imagenes_img_img").removeClass("imagenSeleccionada").css("filter", "grayscale(100%)").css("width","");
+        $("#z_multimediad_img_img").attr("src", "./img/pel_med_01.png").css("filter","grayscale(0%)");
+        $(".imagenes_img_img").eq(0).addClass("imagenSeleccionada").css("filter", "grayscale(0%)").css("width","80%");
+   
+        seleccionarImagenNoPredeterminada();
+        seleccionarCirculo(0);
+    })
+
 
 }
 
@@ -223,6 +241,12 @@ function menuCarrusel (){
         clearInterval(intervalo);
         $("#menuCarrusel").prop("checked", false);   
         numImagen = $(".imagenes_nav>div").index(this);
+    });
+
+    $("nav>img").click(function(){
+        clearInterval(intervalo);
+        $("#menuCarrusel").prop("checked", false);   
+        numImagen = $(".imagenes_img_img").index(".imagenes_img_img");
     });
 
 }
